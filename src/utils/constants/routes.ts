@@ -4,4 +4,5 @@ export const routes = {
   PERSONAL_ROOM: "/personal-room",
   RECORDINGS: "/recordings",
   UPCOMING: "/upcoming",
+  MEETING: "/meeting/:id",
 };
