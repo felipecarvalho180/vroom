@@ -25,7 +25,7 @@ export const homeCards: {
     img: "/icons/schedule.svg",
     title: "Schedule Meeting",
     description: "Plan your meeting",
-    key: "isInstantMeeting",
+    key: "isScheduleMeeting",
     className: "bg-purple-1",
   },
   {
