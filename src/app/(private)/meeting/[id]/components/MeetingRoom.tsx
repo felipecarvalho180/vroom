@@ -20,15 +20,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import EndCallButton from "./EndCallButton";
 import { Loader } from "@/components/custom";
+import { routes } from "@/utils/constants";
 
 type CallLayoutType = "grid" | "speaker left" | "speaker right";
 const layoutOptions = ["Grid", "Speaker Left", "Speaker Right"];
 
 const MeetingRoom = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const isPersonalRoom = !!searchParams.get("personal");
 
   const { useCallCallingState } = useCallStateHooks();
@@ -66,7 +68,7 @@ const MeetingRoom = () => {
       </div>
 
       <div className="fixed bottom-0 flex w-full items-center justify-center gap-5 flex-wrap">
-        <CallControls />
+        <CallControls onLeave={() => router.push(routes.HOME)} />
         <DropdownMenu>
           <div className="flex items-center cursor-pointer rounded-full bg-[#19232d] p-2 hover:bg-[#4c535b]">
             <DropdownMenuTrigger>

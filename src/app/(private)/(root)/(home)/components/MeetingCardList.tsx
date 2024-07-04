@@ -12,6 +12,8 @@ import { useUser } from "@clerk/nextjs";
 import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
+import { copyToClipboard } from "@/utils/helpers/copyToClipboard";
+import { Input } from "@/components/ui/input";
 
 registerLocale("pt-br", ptBR);
 
@@ -30,8 +32,6 @@ const MeetingCardList = () => {
   });
 
   const handleHomeCardClick = (key: HomeMeetingState) => {
-    if (!key) return router.push(routes.RECORDINGS);
-
     setMeetingState(key);
   };
 
@@ -71,11 +71,6 @@ const MeetingCardList = () => {
   };
 
   const meetingLink = `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${callDetails?.id}`;
-
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(meetingLink);
-    toast({ title: "Link copied" });
-  };
 
   return (
     <section className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
@@ -145,7 +140,7 @@ const MeetingCardList = () => {
           title="Meeting Created"
           className="text-center"
           buttonText="Copy Meeting Link"
-          onClick={handleCopyLink}
+          onClick={() => copyToClipboard(meetingLink)}
           image="/icons/checked.svg"
           buttonIcon="/icons/copy.svg"
         />
@@ -159,6 +154,27 @@ const MeetingCardList = () => {
         buttonText="Start Meeting"
         onClick={handleCreateMeeting}
       />
+
+      <MeetingModal
+        isOpen={meetingState === "isJoiningMeeting"}
+        onClose={() => setMeetingState(undefined)}
+        title="Type the link here"
+        className="text-center"
+        buttonText="Join Meeting"
+        onClick={() => values.link && router.push(values.link)}
+      >
+        <Input
+          className="border-none bg-dark-3 focus-visible:ring-0 focus-visible:ring-offset-0"
+          placeholder="Meeting Link"
+          value={values.link}
+          onChange={(e) =>
+            setValues((prevState) => ({
+              ...prevState,
+              link: e.target.value,
+            }))
+          }
+        />
+      </MeetingModal>
     </section>
   );
 };

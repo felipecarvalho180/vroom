@@ -28,11 +28,4 @@ export const homeCards: {
     key: "isScheduleMeeting",
     className: "bg-purple-1",
   },
-  {
-    img: "/icons/recordings.svg",
-    title: "View Recordings",
-    description: "Meeting recordings",
-    key: undefined,
-    className: "bg-yellow-1",
-  },
 ];
